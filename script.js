@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 
 import {
 collection,
-getDocs
+getDocs,
 addDoc,
 query,
 orderBy
