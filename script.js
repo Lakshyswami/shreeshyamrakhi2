@@ -1,3 +1,4 @@
+alert("Script loaded");
 window.onload=function(){
 
 loadCart();
