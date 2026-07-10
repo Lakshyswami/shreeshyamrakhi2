@@ -39,6 +39,14 @@
 <section class="search-section">
 
 <input
+type="text"
+id="searchInput"
+placeholder="🔍 Search Rakhi..."
+onkeyup="searchProducts()"
+>
+
+</section>
+
 <!-- CATEGORY MENU -->
 
 <section class="category-section">
@@ -71,34 +79,13 @@
 
 </section>
 
-<button onclick="filterProducts('designer')">
-Designer
-</button>
-
-<button onclick="filterProducts('joda')">
-Joda
-</button>
-
-<button onclick="filterProducts('kids')">
-Kids
-</button>
-
-<button onclick="filterProducts('traditional')">
-Traditional
-</button>
-
-</section>
-
 <section id="products">
-
 <!-- Product 1 -->
 
 <div class="product" data-category="designer">
 
 <a href="product.html?id=1">
-
 <img src="rakhi1.jpg" alt="Designer Rakhi">
-
 </a>
 
 <h3>Designer Rakhi</h3>
@@ -118,9 +105,7 @@ Add To Cart
 <div class="product" data-category="designer">
 
 <a href="product.html?id=2">
-
 <img src="rakhi2.jpg" alt="Royal Rakhi">
-
 </a>
 
 <h3>Royal Rakhi</h3>
@@ -140,9 +125,7 @@ Add To Cart
 <div class="product" data-category="designer">
 
 <a href="product.html?id=3">
-
 <img src="rakhi3.jpg" alt="Premium Rakhi">
-
 </a>
 
 <h3>Premium Rakhi</h3>
@@ -162,9 +145,7 @@ Add To Cart
 <div class="product" data-category="traditional">
 
 <a href="product.html?id=4">
-
 <img src="rakhi4.jpg" alt="Classic Rakhi">
-
 </a>
 
 <h3>Classic Rakhi</h3>
@@ -184,9 +165,7 @@ Add To Cart
 <div class="product" data-category="designer">
 
 <a href="product.html?id=5">
-
 <img src="rakhi5.jpg" alt="Luxury Rakhi">
-
 </a>
 
 <h3>Luxury Rakhi</h3>
@@ -206,9 +185,7 @@ Add To Cart
 <div class="product" data-category="designer">
 
 <a href="product.html?id=6">
-
 <img src="rakhi6.jpg" alt="Festival Special Rakhi">
-
 </a>
 
 <h3>Festival Special Rakhi</h3>
@@ -222,14 +199,13 @@ Add To Cart
 </button>
 
 </div>
+
 <!-- Product 7 -->
 
 <div class="product" data-category="designer">
 
 <a href="product.html?id=7">
-
 <img src="rakhi7.jpg" alt="Exclusive Rakhi">
-
 </a>
 
 <h3>Exclusive Rakhi</h3>
@@ -249,9 +225,7 @@ Add To Cart
 <div class="product" data-category="joda">
 
 <a href="product.html?id=8">
-
 <img src="jodarakhi1.jpg" alt="Joda Rakhi">
-
 </a>
 
 <h3>Joda Rakhi</h3>
@@ -265,15 +239,12 @@ Add To Cart
 </button>
 
 </div>
-
 <!-- Product 9 -->
 
 <div class="product" data-category="joda">
 
 <a href="product.html?id=9">
-
 <img src="jodarakhi2.jpg" alt="Joda Rakhi 2">
-
 </a>
 
 <h3>Joda Rakhi 2</h3>
@@ -293,9 +264,7 @@ Add To Cart
 <div class="product" data-category="joda">
 
 <a href="product.html?id=10">
-
 <img src="jodarakhi3.jpg" alt="Joda Rakhi 3">
-
 </a>
 
 <h3>Joda Rakhi 3</h3>
@@ -315,9 +284,7 @@ Add To Cart
 <div class="product" data-category="kids">
 
 <a href="product.html?id=11">
-
 <img src="kidsrakhi1.jpg" alt="Kids Rakhi">
-
 </a>
 
 <h3>Kids Rakhi</h3>
@@ -337,9 +304,7 @@ Add To Cart
 <div class="product" data-category="kids">
 
 <a href="product.html?id=12">
-
 <img src="kidsrakhi2.jpg" alt="Kids Rakhi 2">
-
 </a>
 
 <h3>Kids Rakhi 2</h3>
@@ -359,9 +324,7 @@ Add To Cart
 <div class="product" data-category="kids">
 
 <a href="product.html?id=13">
-
 <img src="kidsrakhi3.jpg" alt="Kids Rakhi 3">
-
 </a>
 
 <h3>Kids Rakhi 3</h3>
@@ -381,9 +344,7 @@ Add To Cart
 <div class="product" data-category="traditional">
 
 <a href="product.html?id=14">
-
 <img src="kundanrakhi.jpg" alt="Kundan Rakhi">
-
 </a>
 
 <h3>Kundan Rakhi</h3>
@@ -403,9 +364,7 @@ Add To Cart
 <div class="product" data-category="kids">
 
 <a href="product.html?id=15">
-
 <img src="lilbrorakhi.jpg" alt="Lil Bro Rakhi">
-
 </a>
 
 <h3>Lil Bro Rakhi</h3>
@@ -425,9 +384,7 @@ Add To Cart
 <div class="product" data-category="traditional">
 
 <a href="product.html?id=16">
-
 <img src="omrakhi.jpg" alt="Om Rakhi">
-
 </a>
 
 <h3>Om Rakhi</h3>
@@ -441,7 +398,6 @@ Add To Cart
 </button>
 
 </div>
-
 </section>
 
 <script src="script.js"></script>
