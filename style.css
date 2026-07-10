@@ -844,3 +844,31 @@ footer a:hover{
 text-decoration:underline;
 
 }
+/* ==========================
+   CATEGORY MENU
+========================== */
+
+.category-section{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:20px;
+}
+
+.category-section button{
+    padding:10px 18px;
+    border:none;
+    border-radius:30px;
+    background:#b8860b;
+    color:#fff;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+.category-section button:hover,
+.category-section button.active{
+    background:#8b6508;
+    transform:scale(1.05);
+}
