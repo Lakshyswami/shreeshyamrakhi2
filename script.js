@@ -666,3 +666,15 @@ function changeImage(image){
 document.getElementById("productImage").src=image;
 
 }
+export {
+loadProductDetails,
+updateCartCount,
+addToCart,
+add12ToCart,
+searchProducts,
+filterProducts,
+orderWhatsApp,
+scrollToTop,
+addReview,
+displayReviews
+};
