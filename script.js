@@ -732,32 +732,22 @@ displayReviews();
 function filterProducts(category){
 
     const products = document.querySelectorAll(".product");
-    const buttons = document.querySelectorAll(".category-section button");
+    const buttons = document.querySelectorAll(".category-buttons button");
 
-    buttons.forEach(btn=>{
-        btn.classList.remove("active");
+    buttons.forEach(button=>{
+        button.classList.remove("active");
+
+        if(button.getAttribute("onclick").includes("'" + category + "'")){
+            button.classList.add("active");
+        }
     });
-
-    event.target.classList.add("active");
 
     products.forEach(product=>{
 
-        if(category==="all"){
-
-            product.style.display="block";
-
+        if(category==="all" || product.dataset.category===category){
+            product.style.display="";
         }else{
-
-            if(product.dataset.category===category){
-
-                product.style.display="block";
-
-            }else{
-
-                product.style.display="none";
-
-            }
-
+            product.style.display="none";
         }
 
     });
