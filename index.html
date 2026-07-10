@@ -39,21 +39,37 @@
 <section class="search-section">
 
 <input
-type="text"
-id="searchInput"
-placeholder="🔍 Search Rakhi..."
-onkeyup="searchProducts()"
->
-
-</section>
-
 <!-- CATEGORY MENU -->
 
 <section class="category-section">
 
+<h2 class="category-title">✨ Shop By Category ✨</h2>
+
+<div class="category-buttons">
+
 <button onclick="filterProducts('all')" class="active">
-All
+🏠 All
 </button>
+
+<button onclick="filterProducts('designer')">
+💎 Designer
+</button>
+
+<button onclick="filterProducts('joda')">
+🎁 Joda
+</button>
+
+<button onclick="filterProducts('kids')">
+🧸 Kids
+</button>
+
+<button onclick="filterProducts('traditional')">
+🪔 Traditional
+</button>
+
+</div>
+
+</section>
 
 <button onclick="filterProducts('designer')">
 Designer
