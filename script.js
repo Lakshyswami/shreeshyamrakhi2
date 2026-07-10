@@ -753,3 +753,35 @@ function filterProducts(category){
     });
 
 }
+function add12ToCart(name,price,image){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let existing = cart.find(item=>item.name===name);
+
+
+if(existing){
+
+existing.qty += 12;
+
+}else{
+
+cart.push({
+
+name:name,
+price:price,
+image:image,
+qty:12
+
+});
+
+}
+
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+updateCartCount();
+
+alert("12 "+name+" added to cart!");
+
+}
