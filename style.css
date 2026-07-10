@@ -834,3 +834,55 @@ header h1{
     font-size:35px;
     z-index:9999;
 }
+footer{
+
+    background:#111;
+    color:white;
+
+    text-align:center;
+
+    padding:30px 15px;
+
+    margin-top:50px;
+
+    font-family:'Cinzel', serif;
+
+}
+
+
+footer h3{
+
+    color:#d4af37;
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+
+footer p{
+
+    margin:10px 0;
+
+    font-size:15px;
+
+}
+
+
+footer a{
+
+    color:#d4af37;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
