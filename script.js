@@ -725,3 +725,41 @@ displayReviews();
 
 
 };
+/* ==========================
+   CATEGORY FILTER
+========================== */
+
+function filterProducts(category){
+
+    const products = document.querySelectorAll(".product");
+    const buttons = document.querySelectorAll(".category-section button");
+
+    buttons.forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    event.target.classList.add("active");
+
+    products.forEach(product=>{
+
+        if(category==="all"){
+
+            product.style.display="block";
+
+        }else{
+
+            if(product.dataset.category===category){
+
+                product.style.display="block";
+
+            }else{
+
+                product.style.display="none";
+
+            }
+
+        }
+
+    });
+
+}
