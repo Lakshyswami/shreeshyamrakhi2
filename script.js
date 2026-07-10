@@ -791,3 +791,4 @@ updateCartCount();
 alert("12 "+name+" added to cart!");
 
 }
+alert("TEST POPUP WORKING");
