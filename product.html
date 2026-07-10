@@ -78,35 +78,15 @@ Submit Review
 
 </div>
 <script type="module" src="script.js"></script>
-<script>
-const params = new URLSearchParams(window.location.search);
-const id = Number(params.get("id"));
 
-const product = products.find(p => p.id === id);
+ <script type="module">
+import { loadProductDetails } from "./script.js";
 
-if(product){
-
-    document.getElementById("productImage").src = product.image;
-    document.getElementById("productName").innerText = product.name;
-    document.getElementById("productPrice").innerText = "₹" + product.price;
-    document.getElementById("productDescription").innerText = product.description;
-    document.getElementById("productRating").innerText = product.rating;
-    document.getElementById("productStock").innerText = product.stock;
-    document.getElementById("productDelivery").innerText = product.delivery;
-    document.getElementById("productMaterial").innerText = product.material;
-
-    document.getElementById("buyBtn").onclick = function(){
-        addToCart(product.name, product.price, product.image);
-    };
-
-}else{
-
-    document.querySelector(".product-detail").innerHTML =
-    "<h2>Product Not Found</h2>";
-
-}
+loadProductDetails();
 
 updateCartCount();
-</script>
+</script>     
+    
+
 </body>
 </html>
