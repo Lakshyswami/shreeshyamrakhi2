@@ -727,7 +727,7 @@ setTimeout(function(){
 
 alert("🎁 Buy minimum 12 Rakhi and get up to 40% discount!");
 
-},1000);
+},2000);
 
 
 };
