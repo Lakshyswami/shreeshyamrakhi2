@@ -1,3 +1,4 @@
+alert("JS WORKING");
 alert("Script loaded");
 window.onload=function(){
 
