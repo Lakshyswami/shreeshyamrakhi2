@@ -849,6 +849,18 @@ footer p{
     min-height:auto !important;
     font-weight:600;
 }
+.wholesale-banner{
+
+    margin-top:20px;
+    padding:15px;
+    background:linear-gradient(135deg,#FFD700,#b8860b);
+    color:#8B0000;
+    border-radius:15px;
+    font-size:18px;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
 /* ==========================================
    END OF CSS
 ========================================== */
