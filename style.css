@@ -864,3 +864,25 @@ footer p{
 /* ==========================================
    END OF CSS
 ========================================== */
+.order-banner{
+    width:90%;
+    margin:20px auto;
+    padding:15px;
+    text-align:center;
+    background:linear-gradient(135deg,#8b0000,#d4af37);
+    color:white;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.order-banner h3{
+    margin:5px 0;
+    font-size:22px;
+    font-family:Cinzel,serif;
+}
+
+.order-banner p{
+    margin:8px 0;
+    font-size:18px;
+    font-weight:500;
+}
