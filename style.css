@@ -843,12 +843,12 @@ footer p{
 
 }
 .wholesale-text{
-    font-size:14px;
-    color:#b8860b;
+    color:#b8860b !important;
+    font-size:14px !important;
     margin-top:10px;
+    min-height:auto !important;
     font-weight:600;
 }
-
 /* ==========================================
    END OF CSS
 ========================================== */
