@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Details</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<img class="logo" src="images/logo.png" alt="Logo">
+
+<h1>Shree Shyam Rakhi</h1>
+
+<a href="cart.html">
+🛒 Cart <span id="cartCount">0</span>
+</a>
+
+</header>
+
+<div class="product-detail">
+
+<img id="productImage" alt="Product Image">
+
+<h2 id="productName"></h2>
+
+<h3 id="productPrice"></h3>
+
+<p id="productDescription"></p>
+
+<p><b>⭐ Rating:</b> <span id="productRating"></span></p>
+
+<p><b>📦 Stock:</b> <span id="productStock"></span></p>
+
+<p><b>🚚 Delivery:</b> <span id="productDelivery"></span></p>
+
+<p><b>🎁 Material:</b> <span id="productMaterial"></span></p>
+
+<button id="buyBtn">
+🛒 Add To Cart
+</button>
+<div class="review-section">
+
+<h2>⭐ Customer Reviews</h2>
+
+<input type="text" id="reviewName" placeholder="Your Name">
+
+<select id="reviewRating">
+<option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+<option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+<option value="⭐⭐⭐">⭐⭐⭐</option>
+<option value="⭐⭐">⭐⭐</option>
+<option value="⭐">⭐</option>
+</select>
+
+<textarea id="reviewText" placeholder="Write your review"></textarea>
+
+<button onclick="addReview()">
+Submit Review
+</button>
+
+
+<div id="reviews"></div>
+
+</div>
+
+</div>
+<script src="script.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = Number(params.get("id"));
+
+const product = products.find(p => p.id === id);
+
+if(product){
+
+    document.getElementById("productImage").src = product.image;
+    document.getElementById("productName").innerText = product.name;
+    document.getElementById("productPrice").innerText = "₹" + product.price;
+    document.getElementById("productDescription").innerText = product.description;
+    document.getElementById("productRating").innerText = product.rating;
+    document.getElementById("productStock").innerText = product.stock;
+    document.getElementById("productDelivery").innerText = product.delivery;
+    document.getElementById("productMaterial").innerText = product.material;
+
+    document.getElementById("buyBtn").onclick = function(){
+        addToCart(product.name, product.price, product.image);
+    };
+
+}else{
+
+    document.querySelector(".product-detail").innerHTML =
+    "<h2>Product Not Found</h2>";
+
+}
+
+updateCartCount();
+</script>
+</body>
+</html>
