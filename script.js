@@ -488,15 +488,19 @@ window.loadProductDetails = loadProductDetails;
 // EXPORTS
 // =======================
 
+window.loadCart = loadCart;
+window.updateCartCount = updateCartCount;
+
 export {
-    loadProductDetails,
-    updateCartCount,
-    addToCart,
-    add12ToCart,
-    searchProducts,
-    filterProducts,
-    orderWhatsApp,
-    scrollToTop,
-    addReview,
-    displayReviews
+loadProductDetails,
+loadCart,
+updateCartCount,
+addToCart,
+add12ToCart,
+searchProducts,
+filterProducts,
+orderWhatsApp,
+scrollToTop,
+addReview,
+displayReviews
 };
