@@ -609,6 +609,15 @@ function changeImage(image){
 document.getElementById("productImage").src=image;
 
 }
+window.addToCart = addToCart;
+window.add12ToCart = add12ToCart;
+window.searchProducts = searchProducts;
+window.filterProducts = filterProducts;
+window.orderWhatsApp = orderWhatsApp;
+window.scrollToTop = scrollToTop;
+window.addReview = addReview;
+window.loadProductDetails = loadProductDetails;
+
 export {
 loadProductDetails,
 updateCartCount,
