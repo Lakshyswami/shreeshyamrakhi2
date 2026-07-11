@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Designer Rakhi",
+    "price": 20,
+    "wholesalePrice": 15,
+    "description": "Premium Handmade Designer Rakhi",
+    "category": "designer",
+    "rating": "4.9 ⭐",
+    "stock": "Available",
+    "delivery": "2-4 Days",
+    "material": "Premium Silk Thread",
+    "images": [
+      "rakhi1.jpg",
+      "rakhi2.jpg",
+      "rakhi3.jpg",
+      "rakhi4.jpg"
+    ]
+  }
+]
