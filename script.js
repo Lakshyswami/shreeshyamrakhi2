@@ -692,6 +692,26 @@ ${link}
 }
 
 // =======================
+// COPY PRODUCT LINK
+// =======================
+
+function copyProductLink() {
+
+    navigator.clipboard.writeText(window.location.href)
+    .then(() => {
+
+        alert("✅ Product link copied!");
+
+    })
+    .catch(() => {
+
+        alert("❌ Unable to copy link.");
+
+    });
+
+}
+
+// =======================
 // GLOBAL FUNCTIONS
 // =======================
 
