@@ -705,6 +705,7 @@ window.orderWhatsApp = orderWhatsApp;
 window.scrollToTop = scrollToTop;
 window.addReview = addReview;
 window.loadProductDetails = loadProductDetails;
+window.shareProductWhatsApp = shareProductWhatsApp;
 
 // =======================
 // EXPORTS
