@@ -672,20 +672,22 @@ function shareProductWhatsApp() {
     const link = window.location.href;
 
     const message =
-`🌸 Shree Shyam Rakhi
+`🌸 *Shree Shyam Rakhi*
 
 ✨ ${name}
 
 💰 ${price}
 
-🔗 ${link}
+🛍️ Check this Rakhi:
 
-Check out this beautiful Rakhi!`;
+${link}
 
-    window.open(
-        "https://wa.me/?text=" + encodeURIComponent(message),
-        "_blank"
-    );
+🙏 Thank You`;
+
+    const whatsappURL =
+        "https://wa.me/?text=" + encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
 
 }
 
