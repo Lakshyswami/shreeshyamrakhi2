@@ -138,7 +138,7 @@ function addToCart(name, price, wholesalePrice, image) {
 
     updateCartCount();
 
-    alert(name + " Cart me add ho gaya!");
+    alert(name + " added to cart!");
 
 }
 
@@ -178,7 +178,7 @@ function add12ToCart(name, price, wholesalePrice, image) {
 
     updateCartCount();
 
-    alert("12 " + name + " Cart me add ho gayi!");
+    alert("12 " + name + " added to cart!");
 
 }
 // =======================
@@ -443,6 +443,50 @@ function filterProducts(category) {
 }
 
 // =======================
+// SORT PRODUCTS
+// =======================
+
+function sortProducts() {
+
+    const sortValue = document.getElementById("sortSelect").value;
+
+    switch (sortValue) {
+
+        case "priceLow":
+            products.sort((a, b) => a.price - b.price);
+            break;
+
+        case "priceHigh":
+            products.sort((a, b) => b.price - a.price);
+            break;
+
+        case "nameAZ":
+            products.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+
+        case "nameZA":
+            products.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+
+        case "newest":
+            products.sort((a, b) => b.id - a.id);
+            break;
+
+        case "oldest":
+            products.sort((a, b) => a.id - b.id);
+            break;
+
+        default:
+            products.sort((a, b) => a.id - b.id);
+            break;
+
+    }
+
+    displayProducts();
+
+}
+
+// =======================
 // REVIEWS
 // =======================
 
@@ -603,6 +647,7 @@ window.decreaseQty = decreaseQty;
 window.removeItem = removeItem;
 window.searchProducts = searchProducts;
 window.filterProducts = filterProducts;
+window.sortProducts = sortProducts;
 window.orderWhatsApp = orderWhatsApp;
 window.scrollToTop = scrollToTop;
 window.addReview = addReview;
@@ -626,6 +671,7 @@ export {
     removeItem,
     searchProducts,
     filterProducts,
+    sortProducts,
     orderWhatsApp,
     scrollToTop,
     addReview,
