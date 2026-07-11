@@ -752,6 +752,6 @@ export {
     orderWhatsApp,
     scrollToTop,
     addReview,
-    displayReviews
-    copyProductLink,
+    displayReviews,
+    copyProductLink
 };
