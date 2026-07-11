@@ -1,50 +1,3 @@
-// =======================
-// PRODUCTS ARRAY
-// =======================
-
-let products = [];
-
-// =======================
-// PAGE LOAD
-// =======================
-
-window.onload = async function () {
-
-    await loadProducts();
-
-    if (document.getElementById("products")) {
-        displayProducts();
-    }
-
-    if (document.getElementById("productImage")) {
-        await loadProductDetails();
-    }
-
-    loadCart();
-    updateCartCount();
-
-    if (document.getElementById("reviews")) {
-        displayReviews();
-    }
-
-};
-
-// =======================
-// LOAD PRODUCTS
-// =======================
-
-async function loadProducts() {
-
-    const response = await fetch("products.json");
-
-    products = await response.json();
-
-}
-
-// =======================
-// DISPLAY PRODUCTS
-// =======================
-
 function displayProducts() {
 
     const container = document.getElementById("products");
@@ -73,11 +26,11 @@ function displayProducts() {
 Wholesale : ₹${product.wholesalePrice}
 </p>
 
-<button onclick="addToCart('${product.name}', ${product.price}, '${product.images[0]}')">
+<button onclick="addToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
 Add To Cart
 </button>
 
-<button onclick="add12ToCart('${product.name}', ${product.wholesalePrice}, '${product.images[0]}')">
+<button onclick="add12ToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
 Add 12 Rakhi
 </button>
 
@@ -92,25 +45,26 @@ Wholesale price will be applicable on purchase of minimum 12 Rakhi.
     });
 
 }
-// =======================
-// ADD TO CART
-// =======================
-
-function addToCart(name, price, image) {
+function addToCart(name, price, wholesalePrice, image) {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     let existing = cart.find(item => item.name === name);
 
     if (existing) {
+
         existing.qty++;
+
     } else {
+
         cart.push({
-            name,
-            price,
-            image,
+            name: name,
+            price: price,
+            wholesalePrice: wholesalePrice,
+            image: image,
             qty: 1
         });
+
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -120,26 +74,26 @@ function addToCart(name, price, image) {
     alert(name + " Cart me add ho gaya!");
 
 }
-
-// =======================
-// ADD 12 TO CART
-// =======================
-
-function add12ToCart(name, price, image) {
+function add12ToCart(name, price, wholesalePrice, image) {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     let existing = cart.find(item => item.name === name);
 
     if (existing) {
+
         existing.qty += 12;
+
     } else {
+
         cart.push({
-            name,
-            price,
-            image,
+            name: name,
+            price: price,
+            wholesalePrice: wholesalePrice,
+            image: image,
             qty: 12
         });
+
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -149,17 +103,11 @@ function add12ToCart(name, price, image) {
     alert("12 " + name + " Cart me add ho gayi!");
 
 }
-
-// =======================
-// LOAD CART
-// =======================
-
 function loadCart() {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     let cartItems = document.getElementById("cartItems");
-
     let totalPrice = document.getElementById("totalPrice");
 
     if (!cartItems) return;
@@ -170,7 +118,20 @@ function loadCart() {
 
     cart.forEach((item, index) => {
 
-        total += item.price * item.qty;
+        // Automatic Retail / Wholesale Price
+        let currentPrice =
+            item.qty >= 12
+                ? (item.wholesalePrice || item.price)
+                : item.price;
+
+        let priceType =
+            item.qty >= 12
+                ? "Wholesale Price"
+                : "Retail Price";
+
+        let subtotal = currentPrice * item.qty;
+
+        total += subtotal;
 
         cartItems.innerHTML += `
 
@@ -182,7 +143,7 @@ function loadCart() {
 
 <h3>${item.name}</h3>
 
-<p>₹${item.price}</p>
+<p>${priceType} : ₹${currentPrice}</p>
 
 <button onclick="decreaseQty(${index})">-</button>
 
@@ -190,12 +151,14 @@ function loadCart() {
 
 <button onclick="increaseQty(${index})">+</button>
 
-<p><b>Subtotal : ₹${item.price * item.qty}</b></p>
+<p><b>Subtotal : ₹${subtotal}</b></p>
 
 </div>
 
 <button class="remove-btn" onclick="removeItem(${index})">
+
 Remove
+
 </button>
 
 </div>
@@ -205,92 +168,12 @@ Remove
     });
 
     if (totalPrice) {
+
         totalPrice.innerHTML = "Total Price : ₹" + total;
+
     }
 
 }
-
-// =======================
-// CART COUNT
-// =======================
-
-function updateCartCount() {
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    let count = 0;
-
-    cart.forEach(item => count += item.qty);
-
-    const badge = document.getElementById("cartCount");
-
-    if (badge) {
-        badge.innerText = count;
-    }
-
-}
-// =======================
-// INCREASE QUANTITY
-// =======================
-
-function increaseQty(index){
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart[index].qty++;
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    updateCartCount();
-
-    loadCart();
-
-}
-
-// =======================
-// DECREASE QUANTITY
-// =======================
-
-function decreaseQty(index){
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if(cart[index].qty > 1){
-        cart[index].qty--;
-    }else{
-        cart.splice(index,1);
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    updateCartCount();
-
-    loadCart();
-
-}
-
-// =======================
-// REMOVE ITEM
-// =======================
-
-function removeItem(index){
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart.splice(index,1);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    updateCartCount();
-
-    loadCart();
-
-}
-
-// =======================
-// WHATSAPP ORDER
-// =======================
-
 function orderWhatsApp(){
 
     const name = document.getElementById("customerName")?.value || "";
@@ -313,114 +196,40 @@ function orderWhatsApp(){
 
     let message = "🛍️ *New Order - Shree Shyam Rakhi*%0A%0A";
 
-    message += "👤 Name : "+name+"%0A";
-    message += "📱 Mobile : "+mobile+"%0A";
-    message += "🏠 Address : "+address+"%0A%0A";
+    message += "👤 Name : " + name + "%0A";
+    message += "📱 Mobile : " + mobile + "%0A";
+    message += "🏠 Address : " + address + "%0A%0A";
     message += "🛒 Order Details:%0A%0A";
 
-    cart.forEach(item=>{
+    cart.forEach(item => {
 
-        message += "📦 "+item.name+"%0A";
-        message += "Qty : "+item.qty+"%0A";
-        message += "Price : ₹"+item.price+"%0A%0A";
+        // Automatic Retail / Wholesale Price
+        let currentPrice =
+            item.qty >= 12
+                ? (item.wholesalePrice || item.price)
+                : item.price;
 
-        total += item.price * item.qty;
+        let priceType =
+            item.qty >= 12
+                ? "Wholesale"
+                : "Retail";
 
-    });
+        let subtotal = currentPrice * item.qty;
 
-    message += "💰 Total : ₹"+total;
+        total += subtotal;
 
-    window.open("https://wa.me/919462311500?text="+message);
-
-}
-
-// =======================
-// SEARCH PRODUCTS
-// =======================
-
-function searchProducts(){
-
-    const input = document.getElementById("searchInput");
-
-    if(!input) return;
-
-    const value = input.value.toLowerCase();
-
-    document.querySelectorAll(".product").forEach(card=>{
-
-        const name = card.querySelector("h3").innerText.toLowerCase();
-
-        card.style.display = name.includes(value) ? "block" : "none";
+        message += "📦 " + item.name + "%0A";
+        message += "Qty : " + item.qty + "%0A";
+        message += priceType + " Price : ₹" + currentPrice + "%0A";
+        message += "Subtotal : ₹" + subtotal + "%0A%0A";
 
     });
 
-}
+    message += "💰 Total : ₹" + total;
 
-// =======================
-// CATEGORY FILTER
-// =======================
-
-function filterProducts(category){
-
-    document.querySelectorAll(".product").forEach(card=>{
-
-        if(category==="all" || card.dataset.category===category){
-            card.style.display="block";
-        }else{
-            card.style.display="none";
-        }
-
-    });
+    window.open("https://wa.me/919462311500?text=" + message);
 
 }
-
-// =======================
-// REVIEWS (Temporary)
-// =======================
-
-async function addReview(){
-
-    alert("Review system baad me Firebase se connect karenge.");
-
-}
-
-async function displayReviews(){
-
-    const box = document.getElementById("reviews");
-
-    if(box){
-        box.innerHTML = "";
-    }
-
-}
-
-// =======================
-// SCROLL TO TOP
-// =======================
-
-window.onscroll = function(){
-
-    const btn = document.getElementById("scrollTopBtn");
-
-    if(!btn) return;
-
-    btn.style.display =
-        (document.documentElement.scrollTop > 200) ? "block" : "none";
-
-};
-
-function scrollToTop(){
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-// =======================
-// PRODUCT DETAILS
-// =======================
-
 async function loadProductDetails() {
 
     await loadProducts();
@@ -446,67 +255,51 @@ async function loadProductDetails() {
         "</span>";
 
     document.getElementById("productDescription").innerText = product.description;
-    document.getElementById("productRating").innerText = product.rating;
-    document.getElementById("productStock").innerText = product.stock;
-    document.getElementById("productDelivery").innerText = product.delivery;
-    document.getElementById("productMaterial").innerText = product.material;
+
+    if(document.getElementById("productRating")){
+        document.getElementById("productRating").innerText = product.rating || "-";
+    }
+
+    if(document.getElementById("productStock")){
+        document.getElementById("productStock").innerText = product.stock;
+    }
+
+    if(document.getElementById("productDelivery")){
+        document.getElementById("productDelivery").innerText = product.delivery;
+    }
+
+    if(document.getElementById("productMaterial")){
+        document.getElementById("productMaterial").innerText = product.material;
+    }
 
     const gallery = document.getElementById("gallery");
 
     if (gallery) {
+
         gallery.innerHTML = "";
 
         product.images.forEach(img => {
+
             gallery.innerHTML += `
-                <img src="${img}" class="thumb"
-                onclick="document.getElementById('productImage').src='${img}'">
+            <img src="${img}" class="thumb"
+            onclick="document.getElementById('productImage').src='${img}'">
             `;
+
         });
+
     }
 
     document.getElementById("buyBtn").onclick = function () {
-        addToCart(product.name, product.price, product.images[0]);
+
+        addToCart(
+            product.name,
+            product.price,
+            product.wholesalePrice,
+            product.images[0]
+        );
+
     };
 
     updateCartCount();
+
 }
-
-// =======================
-// GLOBAL FUNCTIONS
-// =======================
-
-window.addToCart = addToCart;
-window.add12ToCart = add12ToCart;
-window.increaseQty = increaseQty;
-window.decreaseQty = decreaseQty;
-window.removeItem = removeItem;
-window.searchProducts = searchProducts;
-window.filterProducts = filterProducts;
-window.orderWhatsApp = orderWhatsApp;
-window.scrollToTop = scrollToTop;
-window.addReview = addReview;
-window.loadProductDetails = loadProductDetails;
-
-// =======================
-// EXPORTS
-// =======================
-
-window.loadCart = loadCart;
-window.updateCartCount = updateCartCount;
-
-export {
-loadProductDetails,
-loadCart,
-updateCartCount,
-addToCart,
-add12ToCart,
-increaseQty,
-decreaseQty,
-removeItem,
-searchProducts,
-filterProducts,
-orderWhatsApp,
-scrollToTop,
-addReview,
-displayReviews
-};
