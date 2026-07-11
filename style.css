@@ -1028,3 +1028,26 @@ transition:.3s;
 background:#222;
 
 }
+
+/* =======================
+   TOAST MESSAGE
+======================= */
+
+.toast{
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    opacity: 0;
+    transition: .3s;
+    z-index: 9999;
+}
+
+.toast.show{
+    opacity: 1;
+    bottom: 45px;
+}
