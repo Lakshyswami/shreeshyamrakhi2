@@ -115,3 +115,21 @@ export {
   submitReview,
   loadReviews
 };
+// =======================
+// FINAL SETUP
+// =======================
+
+window.submitReview = submitReview;
+
+export {
+  submitReview,
+  loadReviews
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (document.getElementById("reviews")) {
+    loadReviews();
+  }
+
+});
