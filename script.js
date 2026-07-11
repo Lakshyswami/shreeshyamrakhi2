@@ -728,8 +728,10 @@ function showToast(message) {
         setTimeout(() => toast.remove(), 300);
 
     }, 2000);
-
+   
 }
+
+window.showToast = showToast;
 
 // =======================
 // GLOBAL FUNCTIONS
