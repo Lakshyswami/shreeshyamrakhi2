@@ -485,6 +485,25 @@ function sortProducts() {
     displayProducts();
 
 }
+// =======================
+// RESET SORT
+// =======================
+
+function resetSort() {
+
+    products.sort((a, b) => a.id - b.id);
+
+    const sort = document.getElementById("sortSelect");
+
+    if (sort) {
+        sort.value = "default";
+    }
+
+    displayProducts();
+
+}
+
+window.resetSort = resetSort;
 
 // =======================
 // REVIEWS
