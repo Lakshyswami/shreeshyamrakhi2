@@ -753,5 +753,6 @@ export {
     scrollToTop,
     addReview,
     displayReviews,
-    copyProductLink
+    copyProductLink,
+    shareProductWhatsApp,
 };
