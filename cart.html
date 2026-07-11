@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Your Cart | Shree Shyam Rakhi</title>
@@ -15,114 +14,87 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
-    <img src="logo.png" class="logo" alt="Logo">
+<img src="logo.png" class="logo" alt="Logo">
 
-    <h1>Shree Shyam Rakhi</h1>
+<h1>Shree Shyam Rakhi</h1>
 
-    <a href="index.html">🏠 Home</a>
+<a href="index.html">
+🏠 Home
+</a>
 
 </header>
 
-
-
 <section class="hero">
 
-    <h2>Your Shopping Cart</h2>
+<h2>Your Shopping Cart</h2>
 
-    <p>
-        Review your selected Rakhi products before placing your order.
-    </p>
+<p>
+Review your selected Rakhi products before placing your order.
+</p>
 
 </section>
 
-
-
 <div class="cart-container">
 
-
-    <div id="cartItems">
-
-    </div>
-
-
-    <hr>
-
-
-    <h2 id="totalPrice">
-        Total Price : ₹0
-    </h2>
-
-
-
-    <div class="customer-details">
-
-
-        <h2>📋 Delivery Details</h2>
-
-
-        <div class="input-box">
-
-            <label>👤 Name</label>
-
-            <input 
-            type="text" 
-            id="customerName" 
-            placeholder="Enter your name">
-
-        </div>
-
-
-
-        <div class="input-box">
-
-            <label>📱 Mobile Number</label>
-
-            <input 
-            type="tel" 
-            id="customerMobile" 
-            placeholder="Enter mobile number">
-
-        </div>
-
-
-
-
-        <div class="input-box">
-
-            <label>🏠 Address</label>
-
-            <textarea 
-            id="customerAddress" 
-            placeholder="Enter full delivery address"></textarea>
-
-        </div>
-
-
-
-        <button class="order-btn" onclick="orderWhatsApp()">
-
-            📲 Order on WhatsApp
-
-        </button>
-
-
-    </div>
-
+<div id="cartItems">
 
 </div>
 
+<hr>
 
+<h2 id="totalPrice">
+Total Price : ₹0
+</h2>
 
+<div class="customer-details">
 
-<script src="script.js"></script>
+<h2>📋 Delivery Details</h2>
 
+<div class="input-box">
 
+<label>👤 Name</label>
+
+<input
+type="text"
+id="customerName"
+placeholder="Enter your name">
+
+</div>
+
+<div class="input-box">
+
+<label>📱 Mobile Number</label>
+
+<input
+type="tel"
+id="customerMobile"
+placeholder="Enter mobile number">
+
+</div>
+
+<div class="input-box">
+
+<label>🏠 Address</label>
+
+<textarea
+id="customerAddress"
+placeholder="Enter full delivery address"></textarea>
+
+</div>
+
+<button class="order-btn" onclick="orderWhatsApp()">
+
+📲 Order on WhatsApp
+
+</button>
+
+</div>
+
+</div>
 
 <button id="scrollTopBtn" onclick="scrollToTop()">
 
@@ -130,7 +102,23 @@
 
 </button>
 
+<script type="module">
 
+import {
+loadCart,
+updateCartCount,
+orderWhatsApp,
+scrollToTop
+} from "./script.js";
+
+loadCart();
+
+updateCartCount();
+
+window.orderWhatsApp = orderWhatsApp;
+window.scrollToTop = scrollToTop;
+
+</script>
 
 </body>
 
