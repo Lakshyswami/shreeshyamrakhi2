@@ -483,6 +483,7 @@ function sortProducts() {
     }
 
     displayProducts();
+    updateCartCount();
 
 }
 // =======================
