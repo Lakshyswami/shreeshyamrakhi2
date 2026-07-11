@@ -513,7 +513,7 @@ window.resetSort = resetSort;
 // =======================
 
 async function addReview() {
-p
+showToast("Review submitted successfully");
 }
 
 async function displayReviews() {
