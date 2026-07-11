@@ -886,3 +886,69 @@ footer p{
     font-size:18px;
     font-weight:500;
 }
+/* =======================
+   SORT SECTION
+======================= */
+
+.sort-section{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+
+margin:20px auto;
+
+padding:12px 18px;
+
+width:fit-content;
+
+background:#fff;
+
+border-radius:12px;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.12);
+
+}
+
+.sort-section label{
+
+font-weight:bold;
+
+font-size:16px;
+
+color:#444;
+
+}
+
+.sort-section select{
+
+padding:10px 15px;
+
+font-size:15px;
+
+border:2px solid #d4af37;
+
+border-radius:8px;
+
+background:white;
+
+cursor:pointer;
+
+outline:none;
+
+transition:0.3s;
+
+}
+
+.sort-section select:hover{
+
+border-color:#b8860b;
+
+}
+
+.sort-section select:focus{
+
+box-shadow:0 0 8px rgba(212,175,55,.5);
+
+}
