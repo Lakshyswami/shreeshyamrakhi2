@@ -658,6 +658,37 @@ onclick="document.getElementById('productImage').src='${img}'">
     updateCartCount();
 
 }
+
+// =======================
+// SHARE PRODUCT WHATSAPP
+// =======================
+
+function shareProductWhatsApp() {
+
+    const name = document.getElementById("productName").innerText;
+
+    const price = document.getElementById("productPrice").innerText;
+
+    const link = window.location.href;
+
+    const message =
+`🌸 Shree Shyam Rakhi
+
+✨ ${name}
+
+💰 ${price}
+
+🔗 ${link}
+
+Check out this beautiful Rakhi!`;
+
+    window.open(
+        "https://wa.me/?text=" + encodeURIComponent(message),
+        "_blank"
+    );
+
+}
+
 // =======================
 // GLOBAL FUNCTIONS
 // =======================
