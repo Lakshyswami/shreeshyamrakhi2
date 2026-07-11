@@ -140,7 +140,7 @@ function addToCart(name, price, wholesalePrice, image) {
 
     updateCartCount();
 
-    alert(name + " added to cart!");
+    showToast("Added to Cart");
 
 }
 
@@ -180,7 +180,7 @@ function add12ToCart(name, price, wholesalePrice, image) {
 
     updateCartCount();
 
-    alert("12 " + name + " added to cart!");
+    showToast("12 Rakhi Added");
 
 }
 // =======================
@@ -513,9 +513,7 @@ window.resetSort = resetSort;
 // =======================
 
 async function addReview() {
-
-    alert("Review system baad me Firebase se connect karenge.");
-
+p
 }
 
 async function displayReviews() {
@@ -700,7 +698,7 @@ function copyProductLink() {
     navigator.clipboard.writeText(window.location.href)
     .then(() => {
 
-        alert("✅ Product link copied!");
+        showToast("Product link copied");
 
     })
     .catch(() => {
