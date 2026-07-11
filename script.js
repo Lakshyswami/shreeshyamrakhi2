@@ -1,3 +1,59 @@
+
+// =======================
+// PRODUCTS ARRAY
+// =======================
+
+let products = [];
+
+// =======================
+// PAGE LOAD
+// =======================
+
+window.onload = async function () {
+
+    await loadProducts();
+
+    if (document.getElementById("products")) {
+        displayProducts();
+    }
+
+    if (document.getElementById("productImage")) {
+        await loadProductDetails();
+    }
+
+    loadCart();
+    updateCartCount();
+
+    if (document.getElementById("reviews")) {
+        displayReviews();
+    }
+
+};
+
+// =======================
+// LOAD PRODUCTS
+// =======================
+
+async function loadProducts() {
+
+    try {
+
+        const response = await fetch("products.json");
+
+        products = await response.json();
+
+    } catch (err) {
+
+        console.error("Products Load Error:", err);
+
+    }
+
+}
+
+// =======================
+// DISPLAY PRODUCTS
+// =======================
+
 function displayProducts() {
 
     const container = document.getElementById("products");
@@ -45,6 +101,11 @@ Wholesale price will be applicable on purchase of minimum 12 Rakhi.
     });
 
 }
+
+// =======================
+// ADD TO CART
+// =======================
+
 function addToCart(name, price, wholesalePrice, image) {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -58,11 +119,17 @@ function addToCart(name, price, wholesalePrice, image) {
     } else {
 
         cart.push({
-            name: name,
-            price: price,
-            wholesalePrice: wholesalePrice,
-            image: image,
+
+            name,
+
+            price,
+
+            wholesalePrice,
+
+            image,
+
             qty: 1
+
         });
 
     }
@@ -74,6 +141,11 @@ function addToCart(name, price, wholesalePrice, image) {
     alert(name + " Cart me add ho gaya!");
 
 }
+
+// =======================
+// ADD 12 TO CART
+// =======================
+
 function add12ToCart(name, price, wholesalePrice, image) {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -87,11 +159,17 @@ function add12ToCart(name, price, wholesalePrice, image) {
     } else {
 
         cart.push({
-            name: name,
-            price: price,
-            wholesalePrice: wholesalePrice,
-            image: image,
+
+            name,
+
+            price,
+
+            wholesalePrice,
+
+            image,
+
             qty: 12
+
         });
 
     }
@@ -103,6 +181,10 @@ function add12ToCart(name, price, wholesalePrice, image) {
     alert("12 " + name + " Cart me add ho gayi!");
 
 }
+// =======================
+// LOAD CART
+// =======================
+
 function loadCart() {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -118,7 +200,6 @@ function loadCart() {
 
     cart.forEach((item, index) => {
 
-        // Automatic Retail / Wholesale Price
         let currentPrice =
             item.qty >= 12
                 ? (item.wholesalePrice || item.price)
@@ -156,9 +237,7 @@ function loadCart() {
 </div>
 
 <button class="remove-btn" onclick="removeItem(${index})">
-
 Remove
-
 </button>
 
 </div>
@@ -174,20 +253,108 @@ Remove
     }
 
 }
-function orderWhatsApp(){
+
+// =======================
+// CART COUNT
+// =======================
+
+function updateCartCount() {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let count = 0;
+
+    cart.forEach(item => count += item.qty);
+
+    const badge = document.getElementById("cartCount");
+
+    if (badge) {
+
+        badge.innerText = count;
+
+    }
+
+}
+
+// =======================
+// INCREASE QUANTITY
+// =======================
+
+function increaseQty(index) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart[index].qty++;
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+
+    loadCart();
+
+}
+
+// =======================
+// DECREASE QUANTITY
+// =======================
+
+function decreaseQty(index) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart[index].qty > 1) {
+
+        cart[index].qty--;
+
+    } else {
+
+        cart.splice(index, 1);
+
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+
+    loadCart();
+
+}
+
+// =======================
+// REMOVE ITEM
+// =======================
+
+function removeItem(index) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+
+    loadCart();
+
+}
+// =======================
+// WHATSAPP ORDER
+// =======================
+
+function orderWhatsApp() {
 
     const name = document.getElementById("customerName")?.value || "";
     const mobile = document.getElementById("customerMobile")?.value || "";
     const address = document.getElementById("customerAddress")?.value || "";
 
-    if(name==="" || mobile==="" || address===""){
+    if (name === "" || mobile === "" || address === "") {
         alert("Please fill all customer details");
         return;
     }
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if(cart.length===0){
+    if (cart.length === 0) {
         alert("Cart Empty");
         return;
     }
@@ -203,7 +370,6 @@ function orderWhatsApp(){
 
     cart.forEach(item => {
 
-        // Automatic Retail / Wholesale Price
         let currentPrice =
             item.qty >= 12
                 ? (item.wholesalePrice || item.price)
@@ -230,6 +396,106 @@ function orderWhatsApp(){
     window.open("https://wa.me/919462311500?text=" + message);
 
 }
+
+// =======================
+// SEARCH PRODUCTS
+// =======================
+
+function searchProducts() {
+
+    const input = document.getElementById("searchInput");
+
+    if (!input) return;
+
+    const value = input.value.toLowerCase();
+
+    document.querySelectorAll(".product").forEach(card => {
+
+        const name = card.querySelector("h3").innerText.toLowerCase();
+
+        card.style.display =
+            name.includes(value) ? "block" : "none";
+
+    });
+
+}
+
+// =======================
+// CATEGORY FILTER
+// =======================
+
+function filterProducts(category) {
+
+    document.querySelectorAll(".product").forEach(card => {
+
+        if (category === "all" || card.dataset.category === category) {
+
+            card.style.display = "block";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+// =======================
+// REVIEWS
+// =======================
+
+async function addReview() {
+
+    alert("Review system baad me Firebase se connect karenge.");
+
+}
+
+async function displayReviews() {
+
+    const box = document.getElementById("reviews");
+
+    if (box) {
+
+        box.innerHTML = "";
+
+    }
+
+}
+// =======================
+// SCROLL TO TOP
+// =======================
+
+window.onscroll = function () {
+
+    const btn = document.getElementById("scrollTopBtn");
+
+    if (!btn) return;
+
+    btn.style.display =
+        (document.documentElement.scrollTop > 200)
+            ? "block"
+            : "none";
+
+};
+
+function scrollToTop() {
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+// =======================
+// PRODUCT DETAILS
+// =======================
+
 async function loadProductDetails() {
 
     await loadProducts();
@@ -240,9 +506,12 @@ async function loadProductDetails() {
     const product = products.find(p => String(p.id) === String(id));
 
     if (!product) {
+
         document.querySelector(".product-detail").innerHTML =
-        "<h2>Product Not Found</h2>";
+            "<h2>Product Not Found</h2>";
+
         return;
+
     }
 
     document.getElementById("productImage").src = product.images[0];
@@ -254,22 +523,35 @@ async function loadProductDetails() {
         product.wholesalePrice +
         "</span>";
 
-    document.getElementById("productDescription").innerText = product.description;
+    document.getElementById("productDescription").innerText =
+        product.description;
 
-    if(document.getElementById("productRating")){
-        document.getElementById("productRating").innerText = product.rating || "-";
+    if (document.getElementById("productRating")) {
+
+        document.getElementById("productRating").innerText =
+            product.rating || "-";
+
     }
 
-    if(document.getElementById("productStock")){
-        document.getElementById("productStock").innerText = product.stock;
+    if (document.getElementById("productStock")) {
+
+        document.getElementById("productStock").innerText =
+            product.stock;
+
     }
 
-    if(document.getElementById("productDelivery")){
-        document.getElementById("productDelivery").innerText = product.delivery;
+    if (document.getElementById("productDelivery")) {
+
+        document.getElementById("productDelivery").innerText =
+            product.delivery;
+
     }
 
-    if(document.getElementById("productMaterial")){
-        document.getElementById("productMaterial").innerText = product.material;
+    if (document.getElementById("productMaterial")) {
+
+        document.getElementById("productMaterial").innerText =
+            product.material;
+
     }
 
     const gallery = document.getElementById("gallery");
@@ -281,9 +563,11 @@ async function loadProductDetails() {
         product.images.forEach(img => {
 
             gallery.innerHTML += `
-            <img src="${img}" class="thumb"
-            onclick="document.getElementById('productImage').src='${img}'">
-            `;
+
+<img src="${img}" class="thumb"
+onclick="document.getElementById('productImage').src='${img}'">
+
+`;
 
         });
 
@@ -292,10 +576,15 @@ async function loadProductDetails() {
     document.getElementById("buyBtn").onclick = function () {
 
         addToCart(
+
             product.name,
+
             product.price,
+
             product.wholesalePrice,
+
             product.images[0]
+
         );
 
     };
@@ -303,3 +592,42 @@ async function loadProductDetails() {
     updateCartCount();
 
 }
+// =======================
+// GLOBAL FUNCTIONS
+// =======================
+
+window.addToCart = addToCart;
+window.add12ToCart = add12ToCart;
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
+window.removeItem = removeItem;
+window.searchProducts = searchProducts;
+window.filterProducts = filterProducts;
+window.orderWhatsApp = orderWhatsApp;
+window.scrollToTop = scrollToTop;
+window.addReview = addReview;
+window.loadProductDetails = loadProductDetails;
+
+// =======================
+// EXPORTS
+// =======================
+
+window.loadCart = loadCart;
+window.updateCartCount = updateCartCount;
+
+export {
+    loadProductDetails,
+    loadCart,
+    updateCartCount,
+    addToCart,
+    add12ToCart,
+    increaseQty,
+    decreaseQty,
+    removeItem,
+    searchProducts,
+    filterProducts,
+    orderWhatsApp,
+    scrollToTop,
+    addReview,
+    displayReviews
+};
