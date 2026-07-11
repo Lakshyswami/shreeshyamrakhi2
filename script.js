@@ -552,91 +552,54 @@ behavior:"smooth"
 });
 
 }
-// =======================
-// PRODUCT DETAILS
-// =======================
+async function loadProductDetails() {
 
-async function loadProductDetails(){
+    await loadProducts();
 
-const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
 
-const id = params.get("id");
+    const id = params.get("id");
 
-if(!id) return;
+    const product = products.find(p => String(p.id) === String(id));
 
-const product = products.find(p => String(p.id) === String(id));
+    if (!product) {
+        document.querySelector(".product-detail").innerHTML =
+        "<h2>Product Not Found</h2>";
+        return;
+    }
 
-if(!product) return;
+    document.getElementById("productImage").src = product.images[0];
+    document.getElementById("productName").innerText = product.name;
 
-document.getElementById("productName").innerText = product.name;
+    document.getElementById("productPrice").innerHTML =
+    "Retail : ₹" + product.price +
+    "<br><span class='wholesale-price'>Wholesale : ₹" +
+    product.wholesalePrice +
+    "</span>";
 
-document.getElementById("productPrice").innerHTML =
-"Retail : ₹" + product.price +
-"<br><span class='wholesale-price'>Wholesale : ₹" +
-product.wholesalePrice +
-"</span>";
+    document.getElementById("productDescription").innerText = product.description;
+    document.getElementById("productRating").innerText = product.rating;
+    document.getElementById("productStock").innerText = product.stock;
+    document.getElementById("productDelivery").innerText = product.delivery;
+    document.getElementById("productMaterial").innerText = product.material;
 
-document.getElementById("productDescription").innerText =
-product.description;
+    const gallery = document.getElementById("gallery");
 
-document.getElementById("productRating").innerText =
-product.rating;
+    gallery.innerHTML = "";
 
-document.getElementById("productStock").innerText =
-product.stock;
+    product.images.forEach(img => {
+        gallery.innerHTML += `
+        <img src="${img}" class="thumb"
+        onclick="document.getElementById('productImage').src='${img}'">
+        `;
+    });
 
-document.getElementById("productDelivery").innerText =
-product.delivery;
+    document.getElementById("buyBtn").onclick = function () {
+        addToCart(product.name, product.price, product.images[0]);
+    };
 
-document.getElementById("productMaterial").innerText =
-product.material;
-
-// Main Image
-
-document.getElementById("productImage").src =
-product.images[0];
-
-// Gallery
-
-const gallery = document.getElementById("gallery");
-
-if(gallery){
-
-gallery.innerHTML="";
-
-product.images.forEach(img=>{
-
-gallery.innerHTML += `
-
-<img
-src="${img}"
-class="thumb"
-onclick="changeImage('${img}')">
-
-`;
-
-});
-
+    updateCartCount();
 }
-
-// Add To Cart
-
-document.getElementById("buyBtn").onclick=function(){
-
-addToCart(
-
-product.name,
-
-product.price,
-
-product.images[0]
-
-);
-
-};
-
-}
-
 // =======================
 // CHANGE IMAGE
 // =======================
