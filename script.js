@@ -728,6 +728,7 @@ window.scrollToTop = scrollToTop;
 window.addReview = addReview;
 window.loadProductDetails = loadProductDetails;
 window.shareProductWhatsApp = shareProductWhatsApp;
+window.copyProductLink = copyProductLink;
 
 // =======================
 // EXPORTS
