@@ -753,4 +753,5 @@ export {
     scrollToTop,
     addReview,
     displayReviews
+    copyProductLink,
 };
