@@ -52,23 +52,31 @@
 🛒 Add To Cart
 </button>
 
+<hr>
+
 <div class="review-section">
 
 <h2>⭐ Customer Reviews</h2>
 
-<input type="text" id="reviewName" placeholder="Your Name">
+<input
+type="text"
+id="reviewName"
+placeholder="Your Name">
 
 <select id="reviewRating">
-<option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
-<option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-<option value="⭐⭐⭐">⭐⭐⭐</option>
-<option value="⭐⭐">⭐⭐</option>
-<option value="⭐">⭐</option>
+<option value="">Select Rating</option>
+<option value="5">⭐⭐⭐⭐⭐ (5)</option>
+<option value="4">⭐⭐⭐⭐ (4)</option>
+<option value="3">⭐⭐⭐ (3)</option>
+<option value="2">⭐⭐ (2)</option>
+<option value="1">⭐ (1)</option>
 </select>
 
-<textarea id="reviewText" placeholder="Write your review"></textarea>
+<textarea
+id="reviewText"
+placeholder="Write your review"></textarea>
 
-<button onclick="addReview()">
+<button onclick="submitReview()">
 Submit Review
 </button>
 
@@ -79,6 +87,8 @@ Submit Review
 </div>
 
 <script type="module" src="script.js"></script>
+
+<script type="module" src="review.js"></script>
 
 <script type="module">
 
@@ -94,4 +104,5 @@ updateCartCount();
 </script>
 
 </body>
+
 </html>
