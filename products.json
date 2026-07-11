@@ -14,5 +14,21 @@
       "rakhi1.2.jpg",
       "rakhi1.3.jpg"
     ]
-  }
+  },
+{
+"id": 2,
+"name": "Golden Rakhi",
+"price": 25,
+"wholesalePrice": 15,
+"description": "Surya Floral Rakhi",
+"category": "designer",
+"stock": "Available",
+"delivery": "6-10 Days",
+"material": "Premium Silk Thread",
+"images": [
+"rakhi2.1.jpg",
+"rakhi2.2.jpg",
+"rakhi2.3.jpg"
+]
+}
 ]
