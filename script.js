@@ -1,12 +1,4 @@
-import { db } from "./firebase.js";
 
-import {
-collection,
-getDocs,
-addDoc,
-query,
-orderBy
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 // =======================
 // PRODUCTS ARRAY
