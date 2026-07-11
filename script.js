@@ -477,6 +477,9 @@ async function loadProductDetails() {
 
 window.addToCart = addToCart;
 window.add12ToCart = add12ToCart;
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
+window.removeItem = removeItem;
 window.searchProducts = searchProducts;
 window.filterProducts = filterProducts;
 window.orderWhatsApp = orderWhatsApp;
