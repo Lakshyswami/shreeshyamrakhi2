@@ -952,3 +952,48 @@ border-color:#b8860b;
 box-shadow:0 0 8px rgba(212,175,55,.5);
 
 }
+/* =======================
+   SHARE BUTTON
+======================= */
+
+#shareBtn{
+
+width:100%;
+
+margin-top:12px;
+
+padding:14px;
+
+background:#25D366;
+
+color:#fff;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#shareBtn:hover{
+
+background:#1ebe5d;
+
+transform:translateY(-2px);
+
+box-shadow:0 6px 16px rgba(37,211,102,.35);
+
+}
+
+#shareBtn:active{
+
+transform:scale(.98);
+
+}
