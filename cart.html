@@ -40,9 +40,7 @@ Review your selected Rakhi products before placing your order.
 
 <div class="cart-container">
 
-<div id="cartItems">
-
-</div>
+<div id="cartItems"></div>
 
 <hr>
 
@@ -55,41 +53,30 @@ Total Price : ₹0
 <h2>📋 Delivery Details</h2>
 
 <div class="input-box">
-
 <label>👤 Name</label>
-
 <input
 type="text"
 id="customerName"
 placeholder="Enter your name">
-
 </div>
 
 <div class="input-box">
-
 <label>📱 Mobile Number</label>
-
 <input
 type="tel"
 id="customerMobile"
 placeholder="Enter mobile number">
-
 </div>
 
 <div class="input-box">
-
 <label>🏠 Address</label>
-
 <textarea
 id="customerAddress"
 placeholder="Enter full delivery address"></textarea>
-
 </div>
 
 <button class="order-btn" onclick="orderWhatsApp()">
-
 📲 Order on WhatsApp
-
 </button>
 
 </div>
@@ -97,26 +84,22 @@ placeholder="Enter full delivery address"></textarea>
 </div>
 
 <button id="scrollTopBtn" onclick="scrollToTop()">
-
 ⬆
-
 </button>
 
 <script type="module">
 
-import {
-loadCart,
-updateCartCount,
-orderWhatsApp,
-scrollToTop
-} from "./script.js";
+import * as app from "./script.js";
 
-loadCart();
+app.loadCart();
+app.updateCartCount();
 
-updateCartCount();
+window.orderWhatsApp = app.orderWhatsApp;
+window.scrollToTop = app.scrollToTop;
 
-window.orderWhatsApp = orderWhatsApp;
-window.scrollToTop = scrollToTop;
+window.increaseQty = app.increaseQty;
+window.decreaseQty = app.decreaseQty;
+window.removeItem = app.removeItem;
 
 </script>
 
