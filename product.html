@@ -18,7 +18,7 @@
 
 <header>
 
-<img class="logo" src="images/logo.png" alt="Logo">
+<img class="logo" src="logo.png" alt="Logo">
 
 <h1>Shree Shyam Rakhi</h1>
 
@@ -51,6 +51,7 @@
 <button id="buyBtn">
 🛒 Add To Cart
 </button>
+
 <div class="review-section">
 
 <h2>⭐ Customer Reviews</h2>
@@ -71,23 +72,26 @@
 Submit Review
 </button>
 
-
 <div id="reviews"></div>
 
 </div>
 
 </div>
+
 <script type="module" src="script.js"></script>
 
- <script type="module">
 <script type="module">
-import { loadProductDetails, updateCartCount } from "./script.js";
 
-loadProductDetails();
+import {
+loadProductDetails,
+updateCartCount
+} from "./script.js";
+
+await loadProductDetails();
+
 updateCartCount();
+
 </script>
-</script>     
-    
 
 </body>
 </html>
