@@ -1,5 +1,3 @@
-
-
 // =======================
 // PRODUCTS ARRAY
 // =======================
@@ -10,20 +8,29 @@ let products = [];
 // PAGE LOAD
 // =======================
 
-window.onload = async function(){
+window.onload = async function () {
 
-await loadProducts();
+    await loadProducts();
 
-loadCart();
+    if (document.getElementById("products")) {
+        displayProducts();
+    }
 
-updateCartCount();
+    if (document.getElementById("productImage")) {
+        await loadProductDetails();
+    }
 
-displayReviews();
+    loadCart();
+    updateCartCount();
+
+    if (document.getElementById("reviews")) {
+        displayReviews();
+    }
 
 };
 
 // =======================
-// LOAD PRODUCTS FROM FIREBASE
+// LOAD PRODUCTS
 // =======================
 
 async function loadProducts() {
@@ -32,32 +39,28 @@ async function loadProducts() {
 
     products = await response.json();
 
-    displayProducts();
-
 }
 
 // =======================
 // DISPLAY PRODUCTS
 // =======================
 
-function displayProducts(){
+function displayProducts() {
 
-const container=document.getElementById("products");
+    const container = document.getElementById("products");
 
-if(!container) return;
+    if (!container) return;
 
-container.innerHTML="";
+    container.innerHTML = "";
 
-products.forEach(product=>{
+    products.forEach(product => {
 
-container.innerHTML+=`
+        container.innerHTML += `
 
 <div class="product" data-category="${product.category}">
 
 <a href="product.html?id=${product.id}">
-
 <img src="${product.images[0]}" alt="${product.name}">
-
 </a>
 
 <h3>${product.name}</h3>
@@ -67,66 +70,54 @@ container.innerHTML+=`
 <h4>Retail : ₹${product.price}</h4>
 
 <p class="wholesale-price">
-
 Wholesale : ₹${product.wholesalePrice}
-
 </p>
 
-<button onclick="addToCart('${product.name}',${product.price},'${product.images[0]}')">
-
+<button onclick="addToCart('${product.name}', ${product.price}, '${product.images[0]}')">
 Add To Cart
-
 </button>
 
-<button onclick="add12ToCart('${product.name}',${product.wholesalePrice},'${product.images[0]}')">
-
+<button onclick="add12ToCart('${product.name}', ${product.wholesalePrice}, '${product.images[0]}')">
 Add 12 Rakhi
-
 </button>
 
 <p class="wholesale-text">
-
 Wholesale price will be applicable on purchase of minimum 12 Rakhi.
-
 </p>
 
 </div>
 
 `;
 
-});
+    });
 
 }
 // =======================
 // ADD TO CART
 // =======================
 
-function addToCart(name, price, image){
+function addToCart(name, price, image) {
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let existing = cart.find(item => item.name === name);
+    let existing = cart.find(item => item.name === name);
 
-if(existing){
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({
+            name,
+            price,
+            image,
+            qty: 1
+        });
+    }
 
-existing.qty++;
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-}else{
+    updateCartCount();
 
-cart.push({
-name:name,
-price:price,
-image:image,
-qty:1
-});
-
-}
-
-localStorage.setItem("cart", JSON.stringify(cart));
-
-updateCartCount();
-
-alert(name + " Cart me add ho gaya!");
+    alert(name + " Cart me add ho gaya!");
 
 }
 
@@ -134,32 +125,28 @@ alert(name + " Cart me add ho gaya!");
 // ADD 12 TO CART
 // =======================
 
-function add12ToCart(name, price, image){
+function add12ToCart(name, price, image) {
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let existing = cart.find(item => item.name === name);
+    let existing = cart.find(item => item.name === name);
 
-if(existing){
+    if (existing) {
+        existing.qty += 12;
+    } else {
+        cart.push({
+            name,
+            price,
+            image,
+            qty: 12
+        });
+    }
 
-existing.qty += 12;
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-}else{
+    updateCartCount();
 
-cart.push({
-name:name,
-price:price,
-image:image,
-qty:12
-});
-
-}
-
-localStorage.setItem("cart", JSON.stringify(cart));
-
-updateCartCount();
-
-alert("12 " + name + " Cart me add ho gayi!");
+    alert("12 " + name + " Cart me add ho gayi!");
 
 }
 
@@ -167,25 +154,25 @@ alert("12 " + name + " Cart me add ho gayi!");
 // LOAD CART
 // =======================
 
-function loadCart(){
+function loadCart() {
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let cartItems = document.getElementById("cartItems");
+    let cartItems = document.getElementById("cartItems");
 
-let totalPrice = document.getElementById("totalPrice");
+    let totalPrice = document.getElementById("totalPrice");
 
-if(!cartItems) return;
+    if (!cartItems) return;
 
-cartItems.innerHTML = "";
+    cartItems.innerHTML = "";
 
-let total = 0;
+    let total = 0;
 
-cart.forEach((item,index)=>{
+    cart.forEach((item, index) => {
 
-total += item.price * item.qty;
+        total += item.price * item.qty;
 
-cartItems.innerHTML += `
+        cartItems.innerHTML += `
 
 <div class="cart-item">
 
@@ -208,22 +195,18 @@ cartItems.innerHTML += `
 </div>
 
 <button class="remove-btn" onclick="removeItem(${index})">
-
 Remove
-
 </button>
 
 </div>
 
 `;
 
-});
+    });
 
-if(totalPrice){
-
-totalPrice.innerHTML = "Total Price : ₹" + total;
-
-}
+    if (totalPrice) {
+        totalPrice.innerHTML = "Total Price : ₹" + total;
+    }
 
 }
 
@@ -231,25 +214,19 @@ totalPrice.innerHTML = "Total Price : ₹" + total;
 // CART COUNT
 // =======================
 
-function updateCartCount(){
+function updateCartCount() {
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let count = 0;
+    let count = 0;
 
-cart.forEach(item=>{
+    cart.forEach(item => count += item.qty);
 
-count += item.qty;
+    const badge = document.getElementById("cartCount");
 
-});
-
-let badge = document.getElementById("cartCount");
-
-if(badge){
-
-badge.innerText = count;
-
-}
+    if (badge) {
+        badge.innerText = count;
+    }
 
 }
 // =======================
@@ -258,15 +235,15 @@ badge.innerText = count;
 
 function increaseQty(index){
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-cart[index].qty++;
+    cart[index].qty++;
 
-localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-updateCartCount();
+    updateCartCount();
 
-loadCart();
+    loadCart();
 
 }
 
@@ -276,23 +253,19 @@ loadCart();
 
 function decreaseQty(index){
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-if(cart[index].qty > 1){
+    if(cart[index].qty > 1){
+        cart[index].qty--;
+    }else{
+        cart.splice(index,1);
+    }
 
-cart[index].qty--;
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-}else{
+    updateCartCount();
 
-cart.splice(index,1);
-
-}
-
-localStorage.setItem("cart", JSON.stringify(cart));
-
-updateCartCount();
-
-loadCart();
+    loadCart();
 
 }
 
@@ -302,15 +275,15 @@ loadCart();
 
 function removeItem(index){
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-cart.splice(index,1);
+    cart.splice(index,1);
 
-localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-updateCartCount();
+    updateCartCount();
 
-loadCart();
+    loadCart();
 
 }
 
@@ -320,61 +293,44 @@ loadCart();
 
 function orderWhatsApp(){
 
-let name = document.getElementById("customerName").value;
+    const name = document.getElementById("customerName")?.value || "";
+    const mobile = document.getElementById("customerMobile")?.value || "";
+    const address = document.getElementById("customerAddress")?.value || "";
 
-let mobile = document.getElementById("customerMobile").value;
+    if(name==="" || mobile==="" || address===""){
+        alert("Please fill all customer details");
+        return;
+    }
 
-let address = document.getElementById("customerAddress").value;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-if(name==="" || mobile==="" || address===""){
+    if(cart.length===0){
+        alert("Cart Empty");
+        return;
+    }
 
-alert("Please fill all customer details");
+    let total = 0;
 
-return;
+    let message = "🛍️ *New Order - Shree Shyam Rakhi*%0A%0A";
 
-}
+    message += "👤 Name : "+name+"%0A";
+    message += "📱 Mobile : "+mobile+"%0A";
+    message += "🏠 Address : "+address+"%0A%0A";
+    message += "🛒 Order Details:%0A%0A";
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.forEach(item=>{
 
-if(cart.length===0){
+        message += "📦 "+item.name+"%0A";
+        message += "Qty : "+item.qty+"%0A";
+        message += "Price : ₹"+item.price+"%0A%0A";
 
-alert("Cart Empty");
+        total += item.price * item.qty;
 
-return;
+    });
 
-}
+    message += "💰 Total : ₹"+total;
 
-let total = 0;
-
-let message = "🛍️ *New Order - Shree Shyam Rakhi*%0A%0A";
-
-message += "👤 Name : "+name+"%0A";
-
-message += "📱 Mobile : "+mobile+"%0A";
-
-message += "🏠 Address : "+address+"%0A%0A";
-
-message += "🛒 Order Details:%0A%0A";
-
-cart.forEach(item=>{
-
-message += "📦 "+item.name+"%0A";
-
-message += "Qty : "+item.qty+"%0A";
-
-message += "Price : ₹"+item.price+"%0A%0A";
-
-total += item.price * item.qty;
-
-});
-
-message += "💰 Total : ₹"+total;
-
-window.open("https://wa.me/919462311500?text="+message);
-
-localStorage.removeItem("cart");
-
-window.location.href="order-success.html";
+    window.open("https://wa.me/919462311500?text="+message);
 
 }
 
@@ -384,29 +340,19 @@ window.location.href="order-success.html";
 
 function searchProducts(){
 
-let input = document.getElementById("searchInput");
+    const input = document.getElementById("searchInput");
 
-if(!input) return;
+    if(!input) return;
 
-let value = input.value.toLowerCase();
+    const value = input.value.toLowerCase();
 
-let cards = document.querySelectorAll(".product");
+    document.querySelectorAll(".product").forEach(card=>{
 
-cards.forEach(card=>{
+        const name = card.querySelector("h3").innerText.toLowerCase();
 
-let name = card.querySelector("h3").innerText.toLowerCase();
+        card.style.display = name.includes(value) ? "block" : "none";
 
-if(name.includes(value)){
-
-card.style.display="block";
-
-}else{
-
-card.style.display="none";
-
-}
-
-});
+    });
 
 }
 
@@ -416,104 +362,35 @@ card.style.display="none";
 
 function filterProducts(category){
 
-const cards = document.querySelectorAll(".product");
+    document.querySelectorAll(".product").forEach(card=>{
 
-cards.forEach(card=>{
+        if(category==="all" || card.dataset.category===category){
+            card.style.display="block";
+        }else{
+            card.style.display="none";
+        }
 
-if(category==="all" || card.dataset.category===category){
-
-card.style.display="block";
-
-}else{
-
-card.style.display="none";
+    });
 
 }
 
-});
-
-}
 // =======================
-// ADD REVIEW
+// REVIEWS (Temporary)
 // =======================
 
 async function addReview(){
 
-let name = document.getElementById("reviewName").value;
-
-let rating = document.getElementById("reviewRating").value;
-
-let text = document.getElementById("reviewText").value;
-
-if(name==="" || text===""){
-
-alert("Please fill review");
-
-return;
+    alert("Review system baad me Firebase se connect karenge.");
 
 }
-
-await addDoc(collection(db,"reviews"),{
-
-name:name,
-
-rating:rating,
-
-text:text,
-
-date:Date.now()
-
-});
-
-document.getElementById("reviewName").value="";
-
-document.getElementById("reviewText").value="";
-
-displayReviews();
-
-}
-
-// =======================
-// DISPLAY REVIEWS
-// =======================
 
 async function displayReviews(){
 
-const box=document.getElementById("reviews");
+    const box = document.getElementById("reviews");
 
-if(!box) return;
-
-box.innerHTML="";
-
-const q=query(
-
-collection(db,"reviews"),
-
-orderBy("date","desc")
-
-);
-
-const snapshot=await getDocs(q);
-
-snapshot.forEach(doc=>{
-
-const review=doc.data();
-
-box.innerHTML+=`
-
-<div class="review-card">
-
-<h4>${review.name}</h4>
-
-<p>${review.rating}</p>
-
-<p>${review.text}</p>
-
-</div>
-
-`;
-
-});
+    if(box){
+        box.innerHTML = "";
+    }
 
 }
 
@@ -521,43 +398,34 @@ box.innerHTML+=`
 // SCROLL TO TOP
 // =======================
 
-window.onscroll=function(){
+window.onscroll = function(){
 
-let btn=document.getElementById("scrollTopBtn");
+    const btn = document.getElementById("scrollTopBtn");
 
-if(!btn) return;
+    if(!btn) return;
 
-if(document.body.scrollTop>200 ||
-
-document.documentElement.scrollTop>200){
-
-btn.style.display="block";
-
-}else{
-
-btn.style.display="none";
-
-}
+    btn.style.display =
+        (document.documentElement.scrollTop > 200) ? "block" : "none";
 
 };
 
 function scrollToTop(){
 
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
+// =======================
+// PRODUCT DETAILS
+// =======================
+
 async function loadProductDetails() {
 
     await loadProducts();
 
     const params = new URLSearchParams(window.location.search);
-
     const id = params.get("id");
 
     const product = products.find(p => String(p.id) === String(id));
@@ -572,10 +440,10 @@ async function loadProductDetails() {
     document.getElementById("productName").innerText = product.name;
 
     document.getElementById("productPrice").innerHTML =
-    "Retail : ₹" + product.price +
-    "<br><span class='wholesale-price'>Wholesale : ₹" +
-    product.wholesalePrice +
-    "</span>";
+        "Retail : ₹" + product.price +
+        "<br><span class='wholesale-price'>Wholesale : ₹" +
+        product.wholesalePrice +
+        "</span>";
 
     document.getElementById("productDescription").innerText = product.description;
     document.getElementById("productRating").innerText = product.rating;
@@ -585,14 +453,16 @@ async function loadProductDetails() {
 
     const gallery = document.getElementById("gallery");
 
-    gallery.innerHTML = "";
+    if (gallery) {
+        gallery.innerHTML = "";
 
-    product.images.forEach(img => {
-        gallery.innerHTML += `
-        <img src="${img}" class="thumb"
-        onclick="document.getElementById('productImage').src='${img}'">
-        `;
-    });
+        product.images.forEach(img => {
+            gallery.innerHTML += `
+                <img src="${img}" class="thumb"
+                onclick="document.getElementById('productImage').src='${img}'">
+            `;
+        });
+    }
 
     document.getElementById("buyBtn").onclick = function () {
         addToCart(product.name, product.price, product.images[0]);
@@ -600,15 +470,11 @@ async function loadProductDetails() {
 
     updateCartCount();
 }
+
 // =======================
-// CHANGE IMAGE
+// GLOBAL FUNCTIONS
 // =======================
 
-function changeImage(image){
-
-document.getElementById("productImage").src=image;
-
-}
 window.addToCart = addToCart;
 window.add12ToCart = add12ToCart;
 window.searchProducts = searchProducts;
@@ -618,15 +484,19 @@ window.scrollToTop = scrollToTop;
 window.addReview = addReview;
 window.loadProductDetails = loadProductDetails;
 
+// =======================
+// EXPORTS
+// =======================
+
 export {
-loadProductDetails,
-updateCartCount,
-addToCart,
-add12ToCart,
-searchProducts,
-filterProducts,
-orderWhatsApp,
-scrollToTop,
-addReview,
-displayReviews
+    loadProductDetails,
+    updateCartCount,
+    addToCart,
+    add12ToCart,
+    searchProducts,
+    filterProducts,
+    orderWhatsApp,
+    scrollToTop,
+    addReview,
+    displayReviews
 };
