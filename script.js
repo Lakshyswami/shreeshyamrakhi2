@@ -34,25 +34,13 @@ displayReviews();
 // LOAD PRODUCTS FROM FIREBASE
 // =======================
 
-async function loadProducts(){
+async function loadProducts() {
 
-const snapshot = await getDocs(collection(db,"products"));
+    const response = await fetch("products.json");
 
-products=[];
+    products = await response.json();
 
-snapshot.forEach((doc)=>{
-
-products.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-});
-
-displayProducts();
+    displayProducts();
 
 }
 
