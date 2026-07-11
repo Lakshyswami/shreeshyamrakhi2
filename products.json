@@ -1,20 +1,18 @@
 [
   {
     "id": 1,
-    "name": "Designer Rakhi",
+    "name": "Peacock Rakhi",
     "price": 20,
-    "wholesalePrice": 15,
-    "description": "Premium Handmade Designer Rakhi",
+    "wholesalePrice": 12,
+    "description": "Premium Colourfull Designer Rakhi",
     "category": "designer",
-    "rating": "4.9 ⭐",
     "stock": "Available",
-    "delivery": "2-4 Days",
+    "delivery": "6-10 Days",
     "material": "Premium Silk Thread",
     "images": [
-      "rakhi1.jpg",
-      "rakhi2.jpg",
-      "rakhi3.jpg",
-      "rakhi4.jpg"
+      "rakhi1.1.jpg",
+      "rakhi1.2.jpg",
+      "rakhi1.3.jpg",
     ]
   }
 ]
