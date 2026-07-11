@@ -13,9 +13,11 @@ window.onload = async function () {
 
     await loadProducts();
 
-    if (document.getElementById("products")) {
-        displayProducts();
-    }
+products.sort((a, b) => a.id - b.id);
+
+if (document.getElementById("products")) {
+    displayProducts();
+}
 
     if (document.getElementById("productImage")) {
         await loadProductDetails();
