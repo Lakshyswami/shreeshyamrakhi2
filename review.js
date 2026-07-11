@@ -34,7 +34,7 @@ async function submitReview() {
   }
 
   if (name === "" || rating === "" || review === "") {
-    alert("Please fill all fields.");
+    window.showToast("Please fill all fields");
     return;
   }
 
@@ -48,7 +48,7 @@ async function submitReview() {
       createdAt: serverTimestamp()
     });
 
-    alert("Review submitted successfully!");
+   window.showToast("Review submitted successfully");
 
     document.getElementById("reviewName").value = "";
     document.getElementById("reviewRating").value = "";
@@ -59,7 +59,7 @@ async function submitReview() {
   } catch (error) {
 
     console.error("Submit Error:", error);
-    alert("Error submitting review.");
+    window.showToast("Error submitting review");
 
   }
 
