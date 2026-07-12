@@ -164,8 +164,8 @@ async function loadReviews() {
       }
 
       const photoHtml = data.photoUrl
-        ? `<img src="${data.photoUrl}" style="width:100%; max-width:200px; border-radius:12px; margin-top:10px;">`
-        : "";
+    ? `<img src="${data.photoUrl}" onclick="openLightbox('${data.photoUrl}')" style="width:100%; max-width:200px; border-radius:12px; margin-top:10px; cursor:pointer; transition:.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">`
+    : "";
 
       reviewBox.innerHTML += `
 
