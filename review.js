@@ -18,6 +18,40 @@ const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
 console.log("Current Product ID:", productId);
+
+// =======================
+// IMGBB CONFIG
+// =======================
+
+const IMGBB_API_KEY = "bef71ad3608374110b6492b2255788d3";
+
+// =======================
+// UPLOAD PHOTO TO IMGBB
+// =======================
+
+async function uploadPhotoToImgBB(file) {
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  const response = await fetch(
+    `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  const data = await response.json();
+
+  if (data.success) {
+    return data.data.url;
+  } else {
+    throw new Error("ImgBB upload failed");
+  }
+
+}
+
 // =======================
 // SUBMIT REVIEW
 // =======================
@@ -27,6 +61,8 @@ async function submitReview() {
   const name = document.getElementById("reviewName").value.trim();
   const rating = document.getElementById("reviewRating").value;
   const review = document.getElementById("reviewText").value.trim();
+  const photoInput = document.getElementById("reviewPhoto");
+  const submitBtn = document.getElementById("submitReviewBtn");
 
   if (!productId) {
     alert("Product ID not found.");
@@ -40,19 +76,35 @@ async function submitReview() {
 
   try {
 
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Submitting...";
+    }
+
+    let photoUrl = "";
+
+    if (photoInput && photoInput.files.length > 0) {
+
+      const file = photoInput.files[0];
+      photoUrl = await uploadPhotoToImgBB(file);
+
+    }
+
     await addDoc(collection(db, "reviews"), {
       productId: String(productId),
       name: name,
       rating: Number(rating),
       review: review,
+      photoUrl: photoUrl,
       createdAt: serverTimestamp()
     });
 
-   window.showToast("Review submitted successfully");
+    window.showToast("Review submitted successfully");
 
     document.getElementById("reviewName").value = "";
     document.getElementById("reviewRating").value = "";
     document.getElementById("reviewText").value = "";
+    if (photoInput) photoInput.value = "";
 
     loadReviews();
 
@@ -61,9 +113,17 @@ async function submitReview() {
     console.error("Submit Error:", error);
     window.showToast("Error submitting review");
 
+  } finally {
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit Review";
+    }
+
   }
 
 }
+
 // =======================
 // LOAD REVIEWS
 // =======================
@@ -103,6 +163,10 @@ async function loadReviews() {
         stars += i <= data.rating ? "⭐" : "☆";
       }
 
+      const photoHtml = data.photoUrl
+        ? `<img src="${data.photoUrl}" style="width:100%; max-width:200px; border-radius:12px; margin-top:10px;">`
+        : "";
+
       reviewBox.innerHTML += `
 
 <div class="review-card">
@@ -112,6 +176,8 @@ async function loadReviews() {
 <p>${stars}</p>
 
 <p>${data.review}</p>
+
+${photoHtml}
 
 </div>
 
@@ -129,6 +195,7 @@ async function loadReviews() {
   }
 
 }
+
 // =======================
 // GLOBAL FUNCTION
 // =======================
@@ -146,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
 // =======================
 // EXPORTS
 // =======================
