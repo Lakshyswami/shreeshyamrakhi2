@@ -107,10 +107,16 @@ placeholder="Your Name">
 id="reviewText"
 placeholder="Write your review"></textarea>
 
-<button onclick="alert('Button Clicked')">
+<div class="input-box">
+    <label>📷 Add a Photo (optional)</label>
+    <input type="file" id="reviewPhoto" accept="image/*">
+</div>
+
+<button onclick="submitReview()" id="submitReviewBtn">
 Submit Review
 </button>
 
+<div id="reviews"></div>
 <div id="reviews"></div>
 
 </div>
