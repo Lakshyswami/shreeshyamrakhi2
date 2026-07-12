@@ -153,9 +153,12 @@ async function loadReviews() {
       return;
     }
 
+    const likedReviews = JSON.parse(localStorage.getItem("likedReviews")) || [];
+
     snapshot.forEach((doc) => {
 
       const data = doc.data();
+      const reviewId = doc.id;
 
       let stars = "";
 
@@ -164,8 +167,11 @@ async function loadReviews() {
       }
 
       const photoHtml = data.photoUrl
-    ? `<img src="${data.photoUrl}" onclick="openLightbox('${data.photoUrl}')" style="width:100%; max-width:200px; border-radius:12px; margin-top:10px; cursor:pointer; transition:.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">`
-    : "";
+        ? `<img src="${data.photoUrl}" onclick="openLightbox('${data.photoUrl}')" style="width:100%; max-width:200px; border-radius:12px; margin-top:10px; cursor:pointer; transition:.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">`
+        : "";
+
+      const likeCount = data.likes || 0;
+      const alreadyLiked = likedReviews.includes(reviewId);
 
       reviewBox.innerHTML += `
 
@@ -178,6 +184,24 @@ async function loadReviews() {
 <p>${data.review}</p>
 
 ${photoHtml}
+
+<button
+  id="likeBtn-${reviewId}"
+  onclick="toggleLike('${reviewId}')"
+  style="
+    margin-top:12px;
+    padding:8px 16px;
+    border:none;
+    border-radius:20px;
+    background:${alreadyLiked ? '#8B0000' : '#eee'};
+    color:${alreadyLiked ? '#fff' : '#555'};
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+  "
+>
+👍 Helpful (<span id="likeCount-${reviewId}">${likeCount}</span>)
+</button>
 
 </div>
 
@@ -195,6 +219,66 @@ ${photoHtml}
   }
 
 }
+
+// =======================
+// TOGGLE LIKE
+// =======================
+
+async function toggleLike(reviewId) {
+
+  let likedReviews = JSON.parse(localStorage.getItem("likedReviews")) || [];
+
+  const alreadyLiked = likedReviews.includes(reviewId);
+
+  const reviewRef = doc(db, "reviews", reviewId);
+
+  try {
+
+    if (alreadyLiked) {
+
+      await updateDoc(reviewRef, {
+        likes: increment(-1)
+      });
+
+      likedReviews = likedReviews.filter(id => id !== reviewId);
+
+    } else {
+
+      await updateDoc(reviewRef, {
+        likes: increment(1)
+      });
+
+      likedReviews.push(reviewId);
+
+    }
+
+    localStorage.setItem("likedReviews", JSON.stringify(likedReviews));
+
+    // UI turant update karo bina pura reload kiye
+    const btn = document.getElementById(`likeBtn-${reviewId}`);
+    const countSpan = document.getElementById(`likeCount-${reviewId}`);
+
+    const newCount = Number(countSpan.innerText) + (alreadyLiked ? -1 : 1);
+    countSpan.innerText = newCount;
+
+    if (alreadyLiked) {
+      btn.style.background = "#eee";
+      btn.style.color = "#555";
+    } else {
+      btn.style.background = "#8B0000";
+      btn.style.color = "#fff";
+    }
+
+  } catch (error) {
+
+    console.error("Like Error:", error);
+    window.showToast("Error updating like");
+
+  }
+
+}
+
+window.toggleLike = toggleLike;
 
 // =======================
 // GLOBAL FUNCTION
