@@ -68,11 +68,9 @@ function displayProducts() {
 
         container.innerHTML += `
 
-<div class="product" data-category="${product.category}">
+<div class="product" data-category="${product.category}" onclick="window.location.href='product.html?id=${product.id}'" style="cursor:pointer;">
 
-<a href="product.html?id=${product.id}">
 <img src="${product.images[0]}" alt="${product.name}">
-</a>
 
 <h3>${product.name}</h3>
 
@@ -84,11 +82,11 @@ function displayProducts() {
 Wholesale : ₹${product.wholesalePrice}
 </p>
 
-<button onclick="addToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
+<button onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
 Add To Cart
 </button>
 
-<button onclick="add12ToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
+<button onclick="event.stopPropagation(); add12ToCart('${product.name}', ${product.price}, ${product.wholesalePrice}, '${product.images[0]}')">
 Add 12 Rakhi
 </button>
 
