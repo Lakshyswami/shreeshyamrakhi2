@@ -411,17 +411,50 @@ function searchProducts() {
 
     const value = input.value.toLowerCase();
 
+    let matchFound = false;
+
     document.querySelectorAll(".product").forEach(card => {
 
         const name = card.querySelector("h3").innerText.toLowerCase();
 
-        card.style.display =
-            name.includes(value) ? "block" : "none";
+        const isMatch = name.includes(value);
+
+        card.style.display = isMatch ? "block" : "none";
+
+        if (isMatch) matchFound = true;
 
     });
 
+    let noResultsMsg = document.getElementById("noResultsMsg");
+
+    if (!matchFound) {
+
+        if (!noResultsMsg) {
+
+            noResultsMsg = document.createElement("p");
+            noResultsMsg.id = "noResultsMsg";
+            noResultsMsg.innerHTML = " No Rakhi found matching your search !!!😕 ";
+            noResultsMsg.style.cssText =
+                "text-align:center; width:100%; padding:40px 0; font-size:18px; color:#888; grid-column:1/-1;";
+
+            document.getElementById("products").appendChild(noResultsMsg);
+
+        }
+
+    } else {
+
+        if (noResultsMsg) {
+
+            noResultsMsg.remove();
+
+        }
+
+    }
+
 }
 
+
+        
 // =======================
 // CATEGORY FILTER
 // =======================
