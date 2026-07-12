@@ -1,9 +1,10 @@
-import { db } from "./firebase.js";
-
 import {
   collection,
   addDoc,
   getDocs,
+  doc,
+  updateDoc,
+  increment,
   query,
   where,
   orderBy,
